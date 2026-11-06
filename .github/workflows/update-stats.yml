@@ -1,0 +1,69 @@
+name: Update profile stats
+
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-data-refresh
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        # actions/checkout@v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      - name: Unlock generator
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: |
+          sudo apt-get install -y -qq git-crypt
+          echo "$GIT_CRYPT_KEY" | base64 -d > "$RUNNER_TEMP/k"
+          git-crypt unlock "$RUNNER_TEMP/k"
+          rm -f "$RUNNER_TEMP/k"
+
+      - name: Set up Python
+        # actions/setup-python@v7.0.0
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Refresh GitHub stats
+        env:
+          # Optional secret ACCESS_TOKEN (classic PAT):
+          #   scopes: read:user, repo
+          # Without it: public owned non-fork repos only for language bar + LOC.
+          # With it: private owned repos are included too.
+          # Create at https://github.com/settings/tokens → repo secret name ACCESS_TOKEN
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_LOGIN: ${{ github.repository_owner }}
+          REFRESH_TRIGGER: ${{ github.event_name }}
+          SKIP_IF_REFRESHED_TODAY: ${{ github.event_name == 'schedule' }}
+          SKIP_IF_UNCHANGED: "1"
+          WRITE_REFRESH_STATE: "1"
+          REQUIRE_LOC: "1"
+        run: pip install -q -r tools/requirements.txt && python update_stats.py
+
+      - name: Rebuild profile cards
+        run: python tools/build_svg.py
+
+      - name: Commit when visible outputs changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dark_mode.svg light_mode.svg language_stats.json loc_cache.json profile_refresh_state.json
+          if git diff --cached --quiet; then
+            echo "No visible profile changes to commit"
+          else
+            git commit -m "chore: refresh profile stats"
+            git push
+          fi

@@ -1,0 +1,3 @@
+tools/** filter=git-crypt diff=git-crypt
+tests/** filter=git-crypt diff=git-crypt
+update_stats.py filter=git-crypt diff=git-crypt

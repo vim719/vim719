@@ -1,0 +1,73 @@
+{
+  "languages": [
+    {
+      "bytes": 1305958,
+      "name": "TypeScript"
+    },
+    {
+      "bytes": 761453,
+      "name": "Python"
+    },
+    {
+      "bytes": 303764,
+      "name": "CSS"
+    },
+    {
+      "bytes": 223621,
+      "name": "HTML"
+    },
+    {
+      "bytes": 206390,
+      "name": "JavaScript"
+    },
+    {
+      "bytes": 195888,
+      "name": "Dart"
+    },
+    {
+      "bytes": 73143,
+      "name": "PLpgSQL"
+    },
+    {
+      "bytes": 51171,
+      "name": "Vue"
+    },
+    {
+      "bytes": 25391,
+      "name": "C++"
+    },
+    {
+      "bytes": 19792,
+      "name": "CMake"
+    },
+    {
+      "bytes": 8625,
+      "name": "Shell"
+    },
+    {
+      "bytes": 6628,
+      "name": "Dockerfile"
+    },
+    {
+      "bytes": 2158,
+      "name": "Swift"
+    },
+    {
+      "bytes": 1488,
+      "name": "C"
+    },
+    {
+      "bytes": 240,
+      "name": "Batchfile"
+    },
+    {
+      "bytes": 133,
+      "name": "Kotlin"
+    },
+    {
+      "bytes": 38,
+      "name": "Objective-C"
+    }
+  ],
+  "version": 1
+}
