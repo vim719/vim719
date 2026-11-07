@@ -1,8 +1,8 @@
 {
   "login": "vim719",
-  "refreshedAt": "2026-11-06T17:51:16.463193Z",
-  "refreshedOn": "2026-11-06",
-  "trigger": "workflow_dispatch",
+  "refreshedAt": "2026-11-07T13:23:26.423367Z",
+  "refreshedOn": "2026-11-07",
+  "trigger": "schedule",
   "values": {
     "contribution_data": "365",
     "follower_data": "0",
