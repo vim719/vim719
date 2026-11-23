@@ -56,9 +56,9 @@
       "headOid": "28064d8933fd7011ab444f20d4d32c6cdb577619"
     },
     "vim719/VoicePizza": {
-      "additions": 8789,
-      "deletions": 8,
-      "headOid": "f3a59ac815a2cc77a139164fa417f0ceafebaf7e"
+      "additions": 8793,
+      "deletions": 12,
+      "headOid": "b6a3eca1628a6f3ef02c4de34647891d7b73298f"
     },
     "vim719/airflow": {
       "additions": 11149,
